@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevKit — the developer's toolbox. Privacy-first, zero-dependency, 100% client-side tools for text, JSON, color, CSS, encoders, JWT, regex and more.">
+  <meta name="referrer" content="no-referrer">
+  <title>DevKit — The Developer's Toolbox</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="DevKit — The Developer's Toolbox">
+  <meta property="og:description" content="A privacy-first, zero-dependency, 100% client-side developer toolbox. Text, JSON, color, CSS, encoders, JWT, regex & generators.">
+</head>
+<body>
+  <div class="app">
+    <!-- ===================== MOBILE MENU ===================== -->
+    <button class="btn menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false">☰ Menu</button>
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Tool navigation">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">&lt;/&gt;</div>
+        <div class="brand-name">DevKit</div>
+      </div>
+
+      <nav aria-label="Categories">
+        <div class="sidebar-cat"><span>Text</span></div>
+        <button class="nav-item" data-tool="wordcount"><span>🧮</span> Word Counter</button>
+        <button class="nav-item" data-tool="caseconv"><span>🔠</span> Case Converter</button>
+        <button class="nav-item" data-tool="slug"><span>🔗</span> Slugify</button>
+
+        <div class="sidebar-cat"><span>JSON</span></div>
+        <button class="nav-item" data-tool="jsonformat"><span>🧩</span> Formatter / Minify</button>
+        <button class="nav-item" data-tool="jsonview"><span>📊</span> Data Viewer</button>
+        <button class="nav-item" data-tool="jsondiff"><span>↔️</span> Diff</button>
+
+        <div class="sidebar-cat"><span>Color</span></div>
+        <button class="nav-item" data-tool="colorconv"><span>🎨</span> Color Converter</button>
+        <button class="nav-item" data-tool="contrast"><span>👁️</span> Contrast Checker</button>
+
+        <div class="sidebar-cat"><span>CSS</span></div>
+        <button class="nav-item" data-tool="gradient"><span>🌈</span> Gradient</button>
+        <button class="nav-item" data-tool="boxshadow"><span>🕶️</span> Box Shadow</button>
+
+        <div class="sidebar-cat"><span>Encoders</span></div>
+        <button class="nav-item" data-tool="base64"><span>🔐</span> Base64</button>
+        <button class="nav-item" data-tool="urlcodec"><span>🌐</span> URL Codec</button>
+        <button class="nav-item" data-tool="uuid"><span>🆔</span> UUID</button>
+        <button class="nav-item" data-tool="token"><span>🎫</span> Token Generator</button>
+        <button class="nav-item" data-tool="hash"><span>🔒</span> Hash (SHA)</button>
+
+        <div class="sidebar-cat"><span>Security</span></div>
+        <button class="nav-item" data-tool="jwt"><span>🗝️</span> JWT Decoder</button>
+        <button class="nav-item" data-tool="password"><span>🔑</span> Password Gen</button>
+
+        <div class="sidebar-cat"><span>Regex</span></div>
+        <button class="nav-item" data-tool="regex"><span>〰️</span> Regex Tester</button>
+
+        <div class="sidebar-cat"><span>Content</span></div>
+        <button class="nav-item" data-tool="lorem"><span>📝</span> Lorem Ipsum</button>
+
+        <div class="sidebar-footer">
+          <a href="https://github.com/thesajidalam/sajidalam" target="_blank" rel="noopener">⭐ Star on GitHub</a><br>
+          © 2026 <a href="https://github.com/thesajidalam" target="_blank" rel="noopener">@thesajidalam</a><br>
+          <span>Zero dependencies · 100% client-side</span>
+        </div>
+      </nav>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <div class="main">
+      <header class="hero">
+        <h1>DevKit — The Developer's Toolbox</h1>
+        <p class="tagline">Everyday dev tools, all in one page. Your data never leaves your device — everything runs locally in your browser.</p>
+        <div class="pills" aria-label="Project features">
+          <span class="pill"><b>Zero dependencies</b></span>
+          <span class="pill"><b>100% client-side</b></span>
+          <span class="pill"><b>Free &amp; open source</b></span>
+          <span class="pill"><b>Works offline</b></span>
+        </div>
+      </header>
+
+      <main class="workspace" id="workspace" aria-live="polite">
+        <!-- ============ WORD COUNTER ============ -->
+        <section class="panel active" id="panel-wordcount" aria-labelledby="h-wordcount">
+          <div class="panel-head">
+            <h2 id="h-wordcount">Word Counter</h2>
+            <p>Live counts as you type.</p>
+          </div>
+          <div class="card">
+            <textarea id="wc-input" placeholder="Type or paste your text here…" rows="8"></textarea>
+            <div class="stats" id="wc-stats">
+              <div class="stat"><div class="num" data-k="words">0</div><div class="lbl">Words</div></div>
+              <div class="stat"><div class="num" data-k="chars">0</div><div class="lbl">Characters</div></div>
+              <div class="stat"><div class="num" data-k="nospaces">0</div><div class="lbl">No spaces</div></div>
+              <div class="stat"><div class="num" data-k="lines">0</div><div class="lbl">Lines</div></div>
+              <div class="stat"><div class="num" data-k="paras">0</div><div class="lbl">Paragraphs</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ CASE CONVERTER ============ -->
+        <section class="panel" id="panel-caseconv" aria-labelledby="h-caseconv">
+          <div class="panel-head">
+            <h2 id="h-caseconv">Case Converter</h2>
+            <p>Convert text between common naming conventions.</p>
+          </div>
+          <div class="card">
+            <div class="field">
+              <label for="cc-input">Source text</label>
+              <textarea id="cc-input" placeholder="e.g. Hello World from DevKit" rows="4"></textarea>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="field"><label>Result</label>
+                  <div class="output" id="cc-result"></div>
+                  <button class="btn copy-btn" data-copy="cc-result">Copy</button>
+                </div>
+              </div>
+              <div class="col">
+                <div class="label-row">
+                  <button class="btn primary" id="cc-upper">UPPER CASE</button>
+                  <button class="btn" id="cc-lower">lower case</button>
+                </div>
+                <div class="label-row" style="margin-top:8px">
+                  <button class="btn" id="cc-title">Title Case</button>
+                  <button class="btn" id="cc-sentence">Sentence case</button>
+                </div>
+                <div class="label-row" style="margin-top:8px">
+                  <button class="btn" id="cc-camel">camelCase</button>
+                  <button class="btn" id="cc-pascal">PascalCase</button>
+                </div>
+                <div class="label-row" style="margin-top:8px">
+                  <button class="btn" id="cc-snake">snake_case</button>
+                  <button class="btn" id="cc-kebab">kebab-case</button>
+                </div>
+                <div class="label-row" style="margin-top:8px">
+                  <button class="btn" id="cc-reverse">Reverse</button>
+                  <button class="btn danger" id="cc-clear">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ SLUGIFY ============ -->
+        <section class="panel" id="panel-slug" aria-labelledby="h-slug">
+          <div class="panel-head">
+            <h2 id="h-slug">Slugify</h2>
+            <p>Create URL/SEO-friendly slugs from any text.</p>
+          </div>
+          <div class="card">
+            <div class="field">
+              <label for="slug-input">Text</label>
+              <textarea id="slug-input" placeholder="e.g. My Awesome Blog Post — Part 2!" rows="3"></textarea>
+            </div>
+            <div class="field"><label>Slug</label>
+              <div class="output" id="slug-result"></div>
+              <button class="btn copy-btn" data-copy="slug-result">Copy</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ JSON FORMATTER ============ -->
+        <section class="panel" id="panel-jsonformat" aria-labelledby="h-jsonformat">
+          <div class="panel-head">
+            <h2 id="h-jsonformat">JSON Formatter / Minifier</h2>
+            <p>Pretty-print or minify JSON, with precise error reporting.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <button class="btn primary" id="jf-format">Format</button>
+              <button class="btn" id="jf-minify">Minify</button>
+              <span class="spacer"></span>
+              <button class="btn" id="jf-paste">Paste</button>
+              <button class="btn filebtn" id="jf-file-btn">Open file<input type="file" id="jf-file" accept=".json,application/json"></button>
+              <button class="btn danger" id="jf-clear">Clear</button>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="jf-input">Input JSON</label>
+                  <textarea id="jf-input" rows="8" placeholder='{"hello":"world"}'></textarea>
+                </div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="jf-indent">Indent</label>
+                  <select id="jf-indent">
+                    <option value="2">2 spaces</option>
+                    <option value="4">4 spaces</option>
+                    <option value="1">1 space</option>
+                    <option value="tab">Tab</option>
+                  </select>
+                </div>
+                <div class="field"><label>Output</label>
+                  <div class="output" id="jf-output"></div>
+                  <button class="btn copy-btn" data-copy="jf-output">Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="msg" id="jf-msg"></div>
+          </div>
+        </section>
+
+        <!-- ============ JSON VIEWER ============ -->
+        <section class="panel" id="panel-jsonview" aria-labelledby="h-jsonview">
+          <div class="panel-head">
+            <h2 id="h-jsonview">JSON Data Viewer</h2>
+            <p>Inspect top-level keys and values in a clean table.</p>
+          </div>
+          <div class="card">
+            <textarea id="jv-input" rows="6" placeholder='{"name":"Sajid","age":25,"admin":true}'></textarea>
+            <div class="toolbar" style="margin-top:12px">
+              <button class="btn primary" id="jv-view">View</button>
+              <button class="btn danger" id="jv-clear">Clear</button>
+              <span class="msg" id="jv-msg"></span>
+            </div>
+            <div id="jv-table-wrap"></div>
+          </div>
+        </section>
+
+        <!-- ============ JSON DIFF ============ -->
+        <section class="panel" id="panel-jsondiff" aria-labelledby="h-jsondiff">
+          <div class="panel-head">
+            <h2 id="h-jsondiff">JSON Diff</h2>
+            <p>Structural, line-based comparison of two JSON documents.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="jd-before">Before</label>
+                  <textarea id="jd-before" rows="7" placeholder='{"name":"A","age":25}'></textarea>
+                </div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="jd-after">After</label>
+                  <textarea id="jd-after" rows="7" placeholder='{"name":"B","age":30}'></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="toolbar">
+              <button class="btn primary" id="jd-diff">Diff</button>
+              <button class="btn" id="jd-swap">⇄ Swap</button>
+              <button class="btn danger" id="jd-clear">Clear</button>
+              <span class="msg" id="jd-msg"></span>
+            </div>
+            <div id="jd-result" class="output"></div>
+          </div>
+        </section>
+
+        <!-- ============ COLOR CONVERTER ============ -->
+        <section class="panel" id="panel-colorconv" aria-labelledby="h-colorconv">
+          <div class="panel-head">
+            <h2 id="h-colorconv">Color Converter</h2>
+            <p>Convert between HEX, RGB and HSL with live preview.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <div class="label-row"><label for="cc-pick">Pick</label><input type="color" id="cc-pick" value="#58a6ff"></div>
+              <span class="spacer"></span>
+              <button class="btn" id="cc-random">🎲 Random</button>
+            </div>
+            <div class="row" style="margin-top:12px">
+              <div class="col">
+                <div class="field"><label for="cc-hex">HEX</label><input type="text" id="cc-hex" value="#58a6ff"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="cc-rgb">RGB</label><input type="text" id="cc-rgb" value="rgb(88, 166, 255)"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="cc-hsl">HSL</label><input type="text" id="cc-hsl" value="hsl(213, 100%, 67%)"></div>
+              </div>
+            </div>
+            <div class="swatches"><div class="swatch" id="cc-swatch" style="width:100%;height:56px"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ CONTRAST CHECKER ============ -->
+        <section class="panel" id="panel-contrast" aria-labelledby="h-contrast">
+          <div class="panel-head">
+            <h2 id="h-contrast">Contrast Checker</h2>
+            <p>WCAG contrast ratio between two colors with accessibility verdict.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="ct-fg">Foreground</label><input type="color" id="ct-fg" value="#e6edf3"></div>
+                <div class="field"><label for="ct-fg-hex">Foreground HEX</label><input type="text" id="ct-fg-hex" value="#e6edf3"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="ct-bg">Background</label><input type="color" id="ct-bg" value="#0d1117"></div>
+                <div class="field"><label for="ct-bg-hex">Background HEX</label><input type="text" id="ct-bg-hex" value="#0d1117"></div>
+              </div>
+            </div>
+            <div class="contrast-bar">
+              <div class="contrast-box" id="ct-preview" style="background:#0d1117">Aa</div>
+              <div class="contrast-num" id="ct-ratio">--:1</div>
+              <div class="msg" id="ct-msg"></div>
+            </div>
+            <div class="badges" id="ct-badges"></div>
+          </div>
+        </section>
+
+        <!-- ============ GRADIENT ============ -->
+        <section class="panel" id="panel-gradient" aria-labelledby="h-gradient">
+          <div class="panel-head">
+            <h2 id="h-gradient">Gradient Generator</h2>
+            <p>Design CSS linear gradients with live preview and copy-ready output.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field">
+                  <label for="gr-angle">Angle: <span id="gr-angle-val">135°</span></label>
+                  <input type="range" id="gr-angle" min="0" max="360" value="135">
+                </div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="gr-c1">Stop 1</label><input type="color" id="gr-c1" value="#58a6ff"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="gr-c2">Stop 2</label><input type="color" id="gr-c2" value="#bc8cff"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="gr-c3">Stop 3 (optional)</label>
+                  <select id="gr-c3"><option value="">None</option>
+                    <option value="#3fb950">#3fb950</option>
+                    <option value="#d29922">#d29922</option>
+                    <option value="#f85149">#f85149</option>
+                    <option value="#39c5cf">#39c5cf</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="gradient-preview" id="gr-preview"></div>
+            <div class="field" style="margin-top:12px"><label>CSS output</label>
+              <div class="output" id="gr-output"></div>
+              <button class="btn copy-btn" data-copy="gr-output">Copy</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ BOX SHADOW ============ -->
+        <section class="panel" id="panel-boxshadow" aria-labelledby="h-boxshadow">
+          <div class="panel-head">
+            <h2 id="h-boxshadow">Box Shadow Generator</h2>
+            <p>Create CSS box-shadow with live preview.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label>Offset X: <span id="bs-x-val">4</span>px</label><input type="range" id="bs-x" min="-50" max="50" value="4"></div>
+                <div class="field"><label>Offset Y: <span id="bs-y-val">4</span>px</label><input type="range" id="bs-y" min="-50" max="50" value="4"></div>
+                <div class="field"><label>Blur: <span id="bs-blur-val">12</span>px</label><input type="range" id="bs-blur" min="0" max="100" value="12"></div>
+                <div class="field"><label>Spread: <span id="bs-spread-val">0</span>px</label><input type="range" id="bs-spread" min="-30" max="30" value="0"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="bs-color">Color</label><input type="color" id="bs-color" value="#000000"></div>
+                <div class="chip" style="margin-top:8px"><label><input type="checkbox" id="bs-inset"> Inset</label></div>
+              </div>
+            </div>
+            <div class="gradient-preview" id="bs-preview" style="background:#1c2129; display:grid; place-items:center;"><div style="width:110px;height:110px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);" id="bs-box"></div></div>
+            <div class="field" style="margin-top:12px"><label>CSS output</label>
+              <div class="output" id="bs-output"></div>
+              <button class="btn copy-btn" data-copy="bs-output">Copy</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ BASE64 ============ -->
+        <section class="panel" id="panel-base64" aria-labelledby="h-base64">
+          <div class="panel-head">
+            <h2 id="h-base64">Base64 Encode / Decode</h2>
+            <p>UTF-8 safe Base64 and Base64URL conversion.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <button class="btn primary" id="b64-encode">Encode →</button>
+              <button class="btn" id="b64-decode">Decode ←</button>
+              <button class="btn" id="b64-url">Base64URL</button>
+              <span class="spacer"></span>
+              <button class="btn" id="b64-clear">Clear</button>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="b64-in">Input</label><textarea id="b64-in" rows="5" placeholder="Hello, 世界!"></textarea></div>
+              </div>
+              <div class="col">
+                <div class="field"><label>Output</label>
+                  <div class="output" id="b64-out"></div>
+                  <button class="btn copy-btn" data-copy="b64-out">Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="msg" id="b64-msg"></div>
+          </div>
+        </section>
+
+        <!-- ============ URL CODEC ============ -->
+        <section class="panel" id="panel-urlcodec" aria-labelledby="h-urlcodec">
+          <div class="panel-head">
+            <h2 id="h-urlcodec">URL Encode / Decode</h2>
+            <p>Percent-encode and decode URL components.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <button class="btn primary" id="url-encode">Encode</button>
+              <button class="btn" id="url-decode">Decode</button>
+              <button class="btn danger" id="url-clear">Clear</button>
+            </div>
+            <div class="field" style="margin-top:12px"><label for="url-in">Input</label><textarea id="url-in" rows="4" placeholder="https://example.com/?q=hello world&x=a/b"></textarea></div>
+            <div class="field"><label>Output</label>
+              <div class="output" id="url-out"></div>
+              <button class="btn copy-btn" data-copy="url-out">Copy</button>
+            </div>
+            <div class="msg" id="url-msg"></div>
+          </div>
+        </section>
+
+        <!-- ============ UUID ============ -->
+        <section class="panel" id="panel-uuid" aria-labelledby="h-uuid">
+          <div class="panel-head">
+            <h2 id="h-uuid">UUID v4 Generator</h2>
+            <p>Cryptographically random version-4 UUIDs.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <div class="label-row"><label for="uuid-count">Count</label>
+                <input type="number" id="uuid-count" value="1" min="1" max="100" style="width:90px">
+              </div>
+              <button class="btn primary" id="uuid-gen">Generate</button>
+              <span class="spacer"></span>
+              <button class="btn" id="uuid-copyall">Copy all</button>
+            </div>
+            <div class="output" id="uuid-out" style="min-height:60px"></div>
+          </div>
+        </section>
+
+        <!-- ============ TOKEN ============ -->
+        <section class="panel" id="panel-token" aria-labelledby="h-token">
+          <div class="panel-head">
+            <h2 id="h-token">Random Token Generator</h2>
+            <p>Cryptographically secure random strings.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="tok-len">Length: <span id="tok-len-val">32</span></label>
+                  <input type="range" id="tok-len" min="8" max="128" value="32">
+                </div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="tok-charset">Charset</label>
+                  <input type="text" id="tok-charset" value="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789">
+                </div>
+              </div>
+            </div>
+            <div class="toolbar">
+              <button class="btn primary" id="tok-gen">Generate</button>
+              <span class="spacer"></span>
+              <button class="btn" id="tok-copy">Copy</button>
+            </div>
+            <div class="output" id="tok-out" style="min-height:60px"></div>
+          </div>
+        </section>
+
+        <!-- ============ HASH ============ -->
+        <section class="panel" id="panel-hash" aria-labelledby="h-hash">
+          <div class="panel-head">
+            <h2 id="h-hash">Hash Generator</h2>
+            <p>Compute SHA-256 / SHA-384 / SHA-512 digests via Web Crypto.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <div class="label-row"><label for="hash-algo">Algorithm</label>
+                <select id="hash-algo"><option value="SHA-256">SHA-256</option><option value="SHA-384">SHA-384</option><option value="SHA-512">SHA-512</option></select>
+              </div>
+              <span class="spacer"></span>
+              <button class="btn danger" id="hash-clear">Clear</button>
+            </div>
+            <div class="field" style="margin-top:12px"><label for="hash-in">Input text</label><textarea id="hash-in" rows="4" placeholder="hello world"></textarea></div>
+            <div class="field"><label>Result</label>
+              <div class="output" id="hash-out"></div>
+              <button class="btn copy-btn" data-copy="hash-out">Copy</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ JWT ============ -->
+        <section class="panel" id="panel-jwt" aria-labelledby="h-jwt">
+          <div class="panel-head">
+            <h2 id="h-jwt">JWT Decoder</h2>
+            <p>Decode JWTs (header + payload) and inspect expiry — no verification.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <button class="btn primary" id="jwt-decode">Decode</button>
+              <span class="spacer"></span>
+              <button class="btn" id="jwt-paste">Paste</button>
+              <button class="btn danger" id="jwt-clear">Clear</button>
+            </div>
+            <div class="field" style="margin-top:12px"><label for="jwt-in">JWT token</label>
+              <textarea id="jwt-in" rows="4" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.…"></textarea>
+            </div>
+            <div class="msg" id="jwt-msg"></div>
+            <div class="row" id="jwt-rows" hidden>
+              <div class="col"><div class="field"><label>Header</label><div class="output" id="jwt-header"></div></div></div>
+              <div class="col"><div class="field"><label>Payload</label><div class="output" id="jwt-payload"></div></div></div>
+            </div>
+            <div class="badges" id="jwt-badges" hidden></div>
+          </div>
+        </section>
+
+        <!-- ============ PASSWORD ============ -->
+        <section class="panel" id="panel-password" aria-labelledby="h-password">
+          <div class="panel-head">
+            <h2 id="h-password">Password Generator</h2>
+            <p>Secure random passwords with adjustable strength.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="pw-len">Length: <span id="pw-len-val">16</span></label>
+                  <input type="range" id="pw-len" min="6" max="64" value="16">
+                </div>
+              </div>
+              <div class="col">
+                <div class="chips">
+                  <span class="chip"><label><input type="checkbox" id="pw-upper" checked> Upper</label></span>
+                  <span class="chip"><label><input type="checkbox" id="pw-lower" checked> Lower</label></span>
+                  <span class="chip"><label><input type="checkbox" id="pw-num" checked> Numbers</label></span>
+                  <span class="chip"><label><input type="checkbox" id="pw-sym" checked> Symbols</label></span>
+                </div>
+              </div>
+            </div>
+            <div class="toolbar">
+              <button class="btn primary" id="pw-gen">Generate</button>
+              <span class="spacer"></span>
+              <button class="btn" id="pw-copy">Copy</button>
+            </div>
+            <div class="password-box" id="pw-out">—</div>
+            <div class="label-row"><span id="pw-strength" class="msg"></span><span id="pw-entropy" style="color:var(--text-muted);font-size:12px"></span></div>
+            <div class="strength-meter"><div id="pw-meter"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ REGEX ============ -->
+        <section class="panel" id="panel-regex" aria-labelledby="h-regex">
+          <div class="panel-head">
+            <h2 id="h-regex">Regex Tester</h2>
+            <p>Test JavaScript regular expressions with live match highlighting.</p>
+          </div>
+          <div class="card">
+            <div class="row">
+              <div class="col">
+                <div class="field"><label for="rx-pattern">Pattern</label><input type="text" id="rx-pattern" value="\b\w+@\w+\.\w+\b"></div>
+              </div>
+              <div class="col">
+                <div class="field"><label for="rx-flags">Flags</label><input type="text" id="rx-flags" value="gi" style="width:80px"></div>
+              </div>
+            </div>
+            <div class="field"><label for="rx-target">Test string</label>
+              <textarea id="rx-target" rows="4" placeholder="Contact me at john@example.com or sara@test.io"></textarea>
+            </div>
+            <div class="toolbar">
+              <button class="btn primary" id="rx-test">Test</button>
+              <button class="btn danger" id="rx-clear">Clear</button>
+              <span class="msg" id="rx-msg"></span>
+            </div>
+            <div class="field"><label>Highlighted text</label><div class="highlight-target" id="rx-highlight"></div></div>
+            <div class="field"><label>Matches (<span id="rx-count">0</span>)</label><div id="rx-matches" class="output"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ LOREM ============ -->
+        <section class="panel" id="panel-lorem" aria-labelledby="h-lorem">
+          <div class="panel-head">
+            <h2 id="h-lorem">Lorem Ipsum Generator</h2>
+            <p>Classic placeholder text in paragraphs, sentences or words.</p>
+          </div>
+          <div class="card">
+            <div class="toolbar">
+              <div class="label-row"><label for="lorem-count">Amount</label>
+                <input type="number" id="lorem-count" value="3" min="1" max="50" style="width:90px">
+              </div>
+              <div class="label-row"><label for="lorem-unit">Unit</label>
+                <select id="lorem-unit" style="width:130px">
+                  <option value="paragraphs">Paragraphs</option>
+                  <option value="sentences">Sentences</option>
+                  <option value="words">Words</option>
+                </select>
+              </div>
+              <span class="spacer"></span>
+              <button class="btn primary" id="lorem-gen">Generate</button>
+              <button class="btn danger" id="lorem-clear">Clear</button>
+            </div>
+            <div class="field" style="margin-top:12px"><label>Output</label>
+              <div class="output" id="lorem-out"></div>
+              <button class="btn copy-btn" data-copy="lorem-out">Copy</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

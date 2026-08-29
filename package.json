@@ -1,0 +1,24 @@
+{
+  "name": "sajidalam-devkit",
+  "version": "1.0.0",
+  "description": "DevKit — the developer's toolbox. A privacy-first, zero-dependency, client-side toolkit for text, JSON, colors, CSS, encoders, JWT, regex and more.",
+  "keywords": [
+    "devtool",
+    "toolbox",
+    "json",
+    "base64",
+    "jwt",
+    "regex",
+    "color",
+    "generator"
+  ],
+  "license": "MIT",
+  "author": "Sajid Alam (@thesajidalam)",
+  "main": "js/utils.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
