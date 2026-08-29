@@ -1,102 +1,182 @@
-# 🧰 DevKit — The Developer's Toolbox
+<p align="center">
+  <img src="https://img.shields.io/badge/dependencies-0-blue" alt="Zero Dependencies">
+  <img src="https://img.shields.io/badge/tests-40%20passing-brightgreen" alt="40 tests passing">
+  <img src="https://img.shields.io/badge/client--side-100%25-8A2BE2" alt="100% Client-side">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
+  <img src="https://img.shields.io/badge/made%20by-%40thesajidalam-blueviolet" alt="by @thesajidalam">
+</p>
 
-> Privacy-first, zero-dependency, 100% client-side developer tools. Your data
-> **never leaves your device** — every tool runs locally in your browser.
+<h1 align="center">🧰 DevKit &mdash; The Developer's Toolbox</h1>
 
-**Live:** [sajidalam.js.org](https://sajidalam.js.org) · License: MIT
+<p align="center">
+  <strong>All the everyday dev tools you need, in one lightning-fast page.</strong><br>
+  Privacy-first &bull; Zero dependencies &bull; 100% client-side &bull; Works offline
+</p>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-40%20passing-brightgreen)](#tests)
-[![Dependencies](https://img.shields.io/badge/dependencies-0-blue)]()
-[![Made by @thesajidalam](https://img.shields.io/badge/made%20by-@thesajidalam-blueviolet)](https://github.com/thesajidalam)
+<p align="center">
+  <a href="https://sajidalam.js.org"><strong>🚀 Live Demo &rarr; sajidalam.js.org</strong></a>
+</p>
 
 ---
 
-## ✨ Features
+## ✨ Overview
 
-A single-page toolbox covering the everyday tools developers reach for:
+**DevKit** is a polished, production-grade single-page web app packed with the
+tools developers reach for daily &mdash; **text**, **JSON**, **color**, **CSS**,
+**encoders**, **hashing**, **JWT**, **regex** and **generators**.
+
+Your data **never leaves your device**. There is no server, no backend, no
+analytics &mdash; every tool runs entirely in your browser using pure
+JavaScript. Once loaded, DevKit works **fully offline**.
+
+> 18 ready-to-use tools &bull; 10 categories &bull; zero install &bull; zero tracking
+
+---
+
+## ⚡ Quick Start
+
+```bash
+# clone
+git clone https://github.com/thesajidalam/sajidalam.git
+cd sajidalam
+
+# run tests (Node >= 14)
+npm test
+```
+
+Then just open `index.html` in any modern browser &mdash; that's it. No build
+step, no bundler, no install requirements.
+
+Or use the hosted app: **[https://sajidalam.js.org](https://sajidalam.js.org)**
+
+---
+
+## 🧰 Tools
 
 | Category | Tools |
-|---|---|
-| **Text** | Live word/char/line/paragraph counter · Case converter (UPPER, lower, Title, Sentence, camelCase, PascalCase, snake_case, kebab-case) · Slugify |
-| **JSON** | Formatter / minifier (with line & column error reporting) · Data viewer (key/value table) · Structural diff |
-| **Color** | HEX ↔ RGB ↔ HSL converter · WCAG contrast checker (A/AA/AAA) · Random color |
-| **CSS** | Linear-gradient generator · Box-shadow generator |
-| **Encoders** | Base64 / Base64URL (UTF-8 safe) · URL encode/decode · UUID v4 · Secure random tokens · SHA-256/384/512 |
-| **Security** | JWT decoder (header/payload + expiry) · Secure password generator |
-| **Regex** | Live regex tester with match highlighting |
-| **Content** | Lorem ipsum generator |
+|---------|-------|
+| **🧮 Text** | Live word / character / line / paragraph counter &bull; Case converter &bull; Slugify |
+| **🧩 JSON** | Formatter &bull; Minifier &bull; Data viewer &bull; Structural diff |
+| **🎨 Color** | HEX ⇄ RGB ⇄ HSL converter &bull; WCAG contrast checker (A/AA/AAA) &bull; Random color |
+| **🌈 CSS** | Linear-gradient generator &bull; Box-shadow generator |
+| **🔐 Encoders** | Base64 / Base64URL (UTF-8 safe) &bull; URL encode/decode &bull; UUID v4 &bull; Secure random tokens &bull; SHA-256/384/512 |
+| **🗝️ Security** | JWT decoder (header/payload + expiry) &bull; Secure password generator |
+| **〰️ Regex** | Live regex tester with match highlighting |
+| **📝 Content** | Lorem ipsum generator |
 
-Every tool includes **Copy** (clipboard API with fallback) and **Clear**
-affordances, plus clear empty and error states.
+Every tool ships with:
+- ✅ One-click **Copy** (clipboard API + fallback)
+- ✅ **Clear** action
+- ✅ Clear **empty** & **error** states
+- ✅ Live/preview output where it makes sense
 
-## 🔒 Privacy & Security
-
-- **Zero network requests.** No analytics, no tracking, no backend. Works fully
-  offline once loaded.
-- Hashing uses the browser's **Web Crypto** API.
-- Randomness uses **crypto.getRandomValues**.
-- User input is never `eval`'d — only safe `RegExp` matching is used.
-- All HTML output is escaped before injection.
+---
 
 ## 🏗️ Architecture
 
 ```
 sajidalam/
-├── index.html        # Semantic shell + all tool panels
+├── index.html        # Semantic HTML shell + all tool panels
 ├── css/style.css     # Design system (CSS custom properties as tokens)
 ├── js/
-│   ├── utils.js      # PURE core logic — UMD export, zero DOM, unit-tested
-│   └── app.js        # UI wiring + presentation only
-├── test/test.js      # Node unit tests (single-file, built-in assert)
+│   ├── utils.js      # 🌟 PURE core logic — UMD export · zero DOM · unit-tested
+│   └── app.js        # Presentation only — UI wiring, tabs, copy/clear
+├── test/test.js      # 40 unit tests (Node built-in assert, zero frameworks)
 ├── CNAME             # sajidalam.js.org
 ├── package.json
 ├── LICENSE           # MIT
 └── README.md
 ```
 
-Core logic is separated from UI wiring so every pure function is unit-testable
-in Node without a browser.
+Key design decisions:
+
+- **Separation of concerns** — all business logic lives in `js/utils.js` as
+  pure functions (no DOM), so every one is unit-testable in Node without a
+  browser. `js/app.js` only wires inputs to those functions.
+- **Zero dependencies** — no frameworks, no build step, no CDNs. Instant load.
+- **Accessible** — semantic HTML, WCAG AA contrast, full keyboard navigation,
+  `prefers-reduced-motion` support, `aria-live` for result regions.
+- **Responsive** — the sidebar collapses to a ☰ slide-over menu on mobile.
+
+---
 
 ## 🧪 Tests
 
 ```bash
-npm install
 npm test
-# -> 40 tests passing, 0 failing
 ```
 
-The suite exercises `utils.js` for text, JSON, color, encoders, UUID/tokens,
-JWT, regex, and generators. Known invariants are verified (e.g. black/white
-contrast ratio == 21, UTF-8 Base64 round-trips, UUID v4 format + uniqueness).
+```
+DevKit tests:
+  passed: 40
+  failed: 0
+All tests passed ✔ (40)
+```
 
-## 🚀 Usage
+The suite verifies every pure function in `utils.js`:
 
-Just open `index.html`, or use the deployed site. Pick a tool from the sidebar
-and start working. On mobile, the sidebar collapses behind a ☰ menu.
+- **Text** — word/char/line counts, slugify, all case converters, reverse, trimLines
+- **JSON** — format/minify (valid + throws on invalid with line:col), viewer, diff
+- **Color** — HEX/RGB/HSL round-trips, contrast ratio, readability levels
+  (verifies known invariants such as **black/white ratio == 21**)
+- **Encoders** — UTF-8 Base64 round-trip, URL encode/decode
+- **UUID/Token** — v4 format regex, uniqueness, secure token length/charset
+- **JWT** — decode valid + invalid, expiry/validity helpers
+- **Regex** — matches + indices, invalid-pattern error handling
+- **Generators** — lorem word/sentence/paragraph counts, password length + charset
 
-## 📄 API
+---
 
-All pure functions are exposed as `window.DevKit` (browser) / `module.exports`
-(Node). Highlights:
+## 🔒 Privacy & Security
+
+- **Zero network requests** &mdash; no analytics, no CDNs, no tracking. Works 100% offline.
+- Hashing via the browser's **Web Crypto** API (`crypto.subtle`).
+- Randomness via **`crypto.getRandomValues`** (crypto-secure).
+- User input is **never `eval`'d** &mdash; only safe `RegExp` matching is used.
+- All injected HTML is **escaped** before being written to the DOM.
+
+---
+
+## 📄 Public API
+
+All pure functions are exposed as `window.DevKit` (browser) and
+`module.exports` (Node):
 
 ```js
-DevKit.slugify('Hello World!');            // 'hello-world'
-DevKit.formatJSON('{"a":1}');              // pretty JSON
-DevKit.contrastRatio('#000', '#fff');      // 21
-DevKit.base64Encode('Hello, 世界');        // UTF-8 safe base64
-DevKit.uuidV4();                           // 8-4-4-4-12 v4 UUID
-DevKit.decodeJWT(token);                   // { header, payload }
-DevKit.findMatches('\\d+', 'g', 'a1b2');   // matches + indices
-DevKit.generatePassword(20, {upper:true}); // { password, entropy, strength }
+DevKit.slugify('Hello World!');             // => 'hello-world'
+DevKit.formatJSON('{"a":1}');               // => pretty JSON
+DevKit.minifyJSON('{ "a" : 1 }');           // => '{"a":1}'
+DevKit.contrastRatio('#000', '#fff');       // => 21
+DevKit.readabilityLevel(21);                // => { level: 'AAA', ... }
+DevKit.base64Encode('Hello, 世界 🎉');      // => UTF-8 safe base64
+DevKit.base64Decode(encoded);               // => original string
+DevKit.uuidV4();                            // => '8-4-4-4-12' v4 UUID
+DevKit.randomToken(32, 'abc');              // => 32-char secure token
+DevKit.sha('hello', 'SHA-256');             // => Promise<hex digest>
+DevKit.decodeJWT(token);                    // => { header, payload }
+DevKit.findMatches('\\d+', 'g', 'a1b2');    // => matches + indices
+DevKit.generatePassword(20, {upper:true});  // => { password, entropy, strength }
+DevKit.loremIpsum(3, 'paragraphs');         // => lorem text
 ```
 
-See `js/utils.js` for full JSDoc.
+Full JSDoc lives in `js/utils.js`.
+
+---
+
+## 🧱 Built With
+
+- **Vanilla HTML / CSS / JS** — no frameworks
+- **Web Crypto API** — secure hashing & randomness
+- **Node.js** — for the test suite only
+
+---
 
 ## 👤 Author
 
-**Sajid Alam** — [@thesajidalam](https://github.com/thesajidalam)
+**Sajid Alam** &mdash; [@thesajidalam](https://github.com/thesajidalam) on GitHub
+
+---
 
 ## 📄 License
 
-[MIT](LICENSE) © 2026 Sajid Alam.
+Released under the [MIT License](LICENSE) &copy; 2026 Sajid Alam.
